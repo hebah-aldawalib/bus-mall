@@ -15,7 +15,10 @@ let userAttemptscounter = 0;
 let leftImageIndex;
 let centerImageIndex;
 let rightImageIndex;
-
+let namesArr = [];
+let votesArr = [];
+let shownArr = [];
+let number = [];
 
 function Mall(name, source) {
 
@@ -24,11 +27,11 @@ function Mall(name, source) {
     this.source = source;
     this.votes = 0;
     this.shown = 0;
-    mall.push(this);
-
+    allMall.push(this);
+    namesArr.push(this.name);
 
 }
-let mall = [];
+let allMall = [];
 
 
 new Mall("banan", 'banana.jpg');
@@ -51,72 +54,86 @@ new Mall("water-can", 'water-can.jpg');
 new Mall("wine-glass", 'wine-glass.jpg');
 
 
-console.log(Mall);
+// console.log(Mall);
 
 function getRandomIndex() {
 
-    return Math.floor(Math.random() * mall.length);
+    return Math.floor(Math.random() * allMall.length);
 }
+
+ number = [leftImageIndex, rightImageIndex, centerImageIndex];
+console.log(number);
 
 // console.log(getRandomIndex());
 
 function renderThreeImages() {
 
+
     leftImageIndex = getRandomIndex();
     centerImageIndex = getRandomIndex();
     rightImageIndex = getRandomIndex();
-    console.log(leftImageIndex);
-    while (leftImageIndex === rightImageIndex || rightImageIndex === centerImageIndex || centerImageIndex === leftImageIndex) {
+    // console.log(leftImageIndex);
+    while (leftImageIndex === rightImageIndex || rightImageIndex === centerImageIndex || centerImageIndex === leftImageIndex || number.includes(leftImageIndex) || number.includes(rightImageIndex) || number.includes(centerImageIndex)) {
         rightImageIndex = getRandomIndex();
         leftImageIndex = getRandomIndex();
         centerImageIndex = getRandomIndex();
+
+
+
     }
+   
 
 
-    leftImageElement.src = mall[leftImageIndex].source;
-    rightImageElement.src = mall[rightImageIndex].source;
-    centerImageElement.src = mall[centerImageIndex].source;
-    mall[leftImageIndex].shown++;
-    mall[rightImageIndex].shown++;
-    mall[centerImageIndex].shown++;
+
+
+
+
+    leftImageElement.src = allMall[leftImageIndex].source;
+    rightImageElement.src = allMall[rightImageIndex].source;
+    centerImageElement.src = allMall[centerImageIndex].source;
+    allMall[leftImageIndex].shown++;
+    allMall[rightImageIndex].shown++;
+    allMall[centerImageIndex].shown++;
+
 }
+
 renderThreeImages();
 
 leftImageElement.addEventListener('click', handleClick);
 rightImageElement.addEventListener('click', handleClick);
 centerImageElement.addEventListener('click', handleClick);
 
+
+
 function handleClick(event) {
-    if (userAttemptscounter < MaxAttempts)
-
-       
-
-    {
+    if (userAttemptscounter < MaxAttempts) {
         if (event.target.id === "left") {
-            mall[leftImageIndex].votes++;
+            allMall[leftImageIndex].votes++;
 
         }
 
         else if (event.target.id === "right") {
-            mall[rightImageIndex].votes++;
+            allMall[rightImageIndex].votes++;
 
         }
         else {
-            mall[centerImageIndex].votes++;
+            allMall[centerImageIndex].votes++;
         }
         renderThreeImages();
         userAttemptscounter++;
     }
-   
-  else {
- rightImageElement.removeEventListener('click', handleClick);
-centerImageElement.removeEventListener('click', handleClick); 
-leftImageElement.removeEventListener('click', handleClick);
 
+    else {
+        rightImageElement.removeEventListener('click', handleClick);
+        centerImageElement.removeEventListener('click', handleClick);
+        leftImageElement.removeEventListener('click', handleClick);
+        showChart();
     }
 
-    
+
 }
+
+
 
 let parent = document.getElementById("botoon")
 let butoon = document.createElement("button")
@@ -131,18 +148,107 @@ function handleButoon(event) {
     // console.log(event.target);
     let list = document.getElementById('result-list');
 
-    for (let i = 0; i < mall.length; i++) {
+    for (let i = 0; i < allMall.length; i++) {
 
         let listItem = document.createElement('li');
 
         list.appendChild(listItem);
 
-        listItem.textContent = `${mall[i].name} has ${mall[i].votes} votes and itis showing ${mall[i].shown}`
+        listItem.textContent = `${allMall[i].name} has ${allMall[i].votes} votes and itis showing ${allMall[i].shown}`
 
     }
     butoon.removeEventListener('click', handleButoon);
-}
 
+}
+// console.log(allMall);
+
+
+// console.log( votesArr);
+
+
+
+
+// showChart();     
+
+function showChart() {
+    for (let i = 0; i < allMall.length; i++) {
+        console.log(allMall);
+        console.log(allMall[i].votes);
+        votesArr.push(allMall[i].votes);
+        shownArr.push(allMall[i].shown);
+
+    }
+    const data = {
+        labels: namesArr,
+        datasets: [{
+            label: 'Votes',
+            data: votesArr,
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(255, 159, 64, 0.2)',
+                'rgba(255, 205, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(201, 203, 207, 0.2)'
+            ],
+            borderColor: [
+                'rgb(255, 99, 132)',
+                'rgb(255, 159, 64)',
+                'rgb(255, 205, 86)',
+                'rgb(75, 192, 192)',
+                'rgb(54, 162, 235)',
+                'rgb(153, 102, 255)',
+                'rgb(201, 203, 207)'
+            ],
+            borderWidth: 1
+        },
+        {
+            label: 'Shown',
+            data: shownArr,
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(255, 159, 64, 0.2)',
+                'rgba(255, 205, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(201, 203, 207, 0.2)'
+            ],
+            borderColor: [
+                'rgb(255, 99, 132)',
+                'rgb(255, 159, 64)',
+                'rgb(255, 205, 86)',
+                'rgb(75, 192, 192)',
+                'rgb(54, 162, 235)',
+                'rgb(153, 102, 255)',
+                'rgb(201, 203, 207)'
+            ],
+            borderWidth: 1
+        }
+
+        ]
+    };
+
+    const config = {
+        type: 'bar',
+        data: data,
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        },
+    };
+
+
+    var myChart = new Chart(
+        document.getElementById('myChart'),
+        config
+    );
+
+}
 
 
 
