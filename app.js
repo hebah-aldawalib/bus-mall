@@ -20,16 +20,18 @@ let votesArr = [];
 let shownArr = [];
 let number = [];
 
-function Mall(name, source) {
+class Mall {
+    constructor(name, source) {
 
 
-    this.name = name;
-    this.source = source;
-    this.votes = 0;
-    this.shown = 0;
-    allMall.push(this);
-    namesArr.push(this.name);
+        this.name = name;
+        this.source = source;
+        this.votes = 0;
+        this.shown = 0;
+        allMall.push(this);
+        namesArr.push(this.name);
 
+    }
 }
 let allMall = [];
 
@@ -61,30 +63,31 @@ function getRandomIndex() {
     return Math.floor(Math.random() * allMall.length);
 }
 
- let pic = [leftImageIndex, rightImageIndex, centerImageIndex];
-console.log(number);
+let pic = [leftImageIndex, rightImageIndex, centerImageIndex];
+// console.log(number);
 
 // console.log(getRandomIndex());
-
+let shownpic = [];
 function renderThreeImages() {
 
 
     leftImageIndex = getRandomIndex();
     centerImageIndex = getRandomIndex();
     rightImageIndex = getRandomIndex();
-    console.log('befor',pic);
+    // console.log('befor', pic);
 
-   
+
     while (leftImageIndex === rightImageIndex || rightImageIndex === centerImageIndex || centerImageIndex === leftImageIndex || number.includes(leftImageIndex) || number.includes(rightImageIndex) || number.includes(centerImageIndex)) {
         rightImageIndex = getRandomIndex();
         leftImageIndex = getRandomIndex();
         centerImageIndex = getRandomIndex();
 
 
-        shownpic=[leftImageIndex , centerImageIndex, rightImageIndex]
+        shownpic = [leftImageIndex, centerImageIndex, rightImageIndex]
+        // console.log('after', pic);
     }
-   
-    console.log('after',pic);
+
+
 
 
 
@@ -96,6 +99,7 @@ function renderThreeImages() {
     allMall[leftImageIndex].shown++;
     allMall[rightImageIndex].shown++;
     allMall[centerImageIndex].shown++;
+
 
 }
 
@@ -130,9 +134,10 @@ function handleClick(event) {
         centerImageElement.removeEventListener('click', handleClick);
         leftImageElement.removeEventListener('click', handleClick);
         showChart();
+
     }
 
-
+    updateStorge();
 }
 
 
@@ -167,9 +172,52 @@ function handleButoon(event) {
 
 // console.log( votesArr);
 
+let votes = [];
+let shown = [];
+
+function updateStorge() {
+    // console.log(votes);
+    // console.log(shown);
+    let stringArr = JSON.stringify(allMall);
+    console.log(stringArr);
+    localStorage.setItem('allMall', stringArr)
+    console.log(allMall);
+}
 
 
 
+
+
+
+function gitStoreg() {
+    let data = localStorage.getItem('allMall');
+    console.log(data);
+
+    // console.log(parsedArr);
+
+    if (data !== null) {
+        let parsedArr = JSON.parse(data);
+        allMall = parsedArr;
+        // for (let i = 0; i < parsedArr.length; i++) {
+
+
+        // new votes(parsedArr[i].votes);
+        // new shown(parsedArr[i].shown);
+        // }
+        // console.log(votes);
+        // console.log(shown);
+        console.log(parsedArr[i]);
+    }
+}
+
+
+
+
+
+
+
+
+// updateStorge();
 // showChart();     
 
 function showChart() {
@@ -203,7 +251,7 @@ function showChart() {
                 'rgb(153, 102, 255)',
                 'rgb(201, 203, 207)'
             ],
-            borderWidth: 1
+            borderWidth: 3
         },
         {
             label: 'Shown',
@@ -226,7 +274,7 @@ function showChart() {
                 'rgb(153, 102, 255)',
                 'rgb(201, 203, 207)'
             ],
-            borderWidth: 1
+            borderWidth: 3
         }
 
         ]
@@ -239,6 +287,7 @@ function showChart() {
             scales: {
                 y: {
                     beginAtZero: true
+
                 }
             }
         },
@@ -254,6 +303,7 @@ function showChart() {
 
 
 
+gitStoreg();
 // leftImageElement.removeEventListener('click', handleClick);
 // rightImageElement.removeEventListener('click', handleClick);
 // centerImageElement.removeEventListener('click', handleClick);
