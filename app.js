@@ -61,7 +61,7 @@ function getRandomIndex() {
     return Math.floor(Math.random() * allMall.length);
 }
 
- number = [leftImageIndex, rightImageIndex, centerImageIndex];
+ let pic = [leftImageIndex, rightImageIndex, centerImageIndex];
 console.log(number);
 
 // console.log(getRandomIndex());
@@ -72,17 +72,19 @@ function renderThreeImages() {
     leftImageIndex = getRandomIndex();
     centerImageIndex = getRandomIndex();
     rightImageIndex = getRandomIndex();
-    // console.log(leftImageIndex);
+    console.log('befor',pic);
+
+   
     while (leftImageIndex === rightImageIndex || rightImageIndex === centerImageIndex || centerImageIndex === leftImageIndex || number.includes(leftImageIndex) || number.includes(rightImageIndex) || number.includes(centerImageIndex)) {
         rightImageIndex = getRandomIndex();
         leftImageIndex = getRandomIndex();
         centerImageIndex = getRandomIndex();
 
 
-
+        shownpic=[leftImageIndex , centerImageIndex, rightImageIndex]
     }
    
-
+    console.log('after',pic);
 
 
 
