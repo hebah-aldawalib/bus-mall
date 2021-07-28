@@ -76,20 +76,20 @@ function renderThreeImages() {
     rightImageIndex = getRandomIndex();
     // console.log('befor', pic);
 
-
+  
     while (leftImageIndex === rightImageIndex || rightImageIndex === centerImageIndex || centerImageIndex === leftImageIndex || number.includes(leftImageIndex) || number.includes(rightImageIndex) || number.includes(centerImageIndex)) {
         rightImageIndex = getRandomIndex();
         leftImageIndex = getRandomIndex();
         centerImageIndex = getRandomIndex();
 
 
-        shownpic = [leftImageIndex, centerImageIndex, rightImageIndex]
+        
         // console.log('after', pic);
     }
 
+    number = [leftImageIndex, centerImageIndex, rightImageIndex]
 
-
-
+console.log(number);
 
 
 
@@ -181,7 +181,7 @@ function updateStorge() {
     let stringArr = JSON.stringify(allMall);
     console.log(stringArr);
     localStorage.setItem('allMall', stringArr)
-    console.log(allMall);
+    // console.log(allMall);
 }
 
 
@@ -206,7 +206,7 @@ function gitStoreg() {
         // }
         // console.log(votes);
         // console.log(shown);
-        console.log(parsedArr[i]);
+        // console.log(parsedArr[i]);
     }
 }
 
